@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="qrcode.js"></script>
+<script type="text/javascript" src="main.js"></script>
 <style>
     html {
     height: 100%;
@@ -23,7 +27,7 @@ body {
     font-size: 16px;
 }
 
-img {margin-bottom: -8px;}
+
 
 </style>
 </head>
@@ -38,22 +42,34 @@ img {margin-bottom: -8px;}
   
 </header>
 
+<!-- Modal Structure -->
+<div id="qrModal" class="w3-modal" style="display:none; ">
+    <div class="w3-modal-content w3-animate-top w3-card-4" >
+        <header class="w3-container w3-teal">
+            <span onclick="document.getElementById('qrModal').style.display='none'"
+            class="w3-button w3-display-topright">&times;</span>
+            <h2>Your QR Code</h2>
+        </header>
+        <div class="w3-container w3-padding-16" id="modal-content" style="display: flex; align-items: center; justify-content: space-between;">
+            <!-- Left Side: QR Code Image -->
+            <div id="qr-code-container" class="w3-image w3-center" >
+            <!-- QR Code injected here -->
+            </div>
 
-<!-- Modal -->
-<div id="download" class="w3-modal w3-animate-opacity">
-  <div class="w3-modal-content" style="padding:32px">
-    <div class="w3-container w3-white">
-      <i onclick="document.getElementById('download').style.display='none'" class="fa fa-remove w3-xlarge w3-button w3-transparent w3-right w3-xlarge"></i>
-      <h2 class="w3-wide">DOWNLOAD</h2>
-      <p>Download the app in AppStore, Google Play or Microsoft Store.</p>
-      <i class="fa fa-android w3-large"></i> <i class="fa fa-apple w3-large"></i> <i class="fa fa-windows w3-large"></i>
-      <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
-      <button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('download').style.display='none'">Fake Download</button>
+            <!-- Right Side: URL, Size Info, and Download Button -->
+            <div id="qr-info" style="flex: 1; padding-left: 20px;">
+                <p><strong>URL:</strong> <span id="display-url"></span></p>
+                <p><strong>Size:</strong> <span id="display-size"></span></p>
+                <!-- Download button will be injected here -->
+            </div>
+        </div>
+        <footer class="w3-container w3-teal">
+            <p>2024 Free QR Code Generator</p>
+        </footer>
     </div>
-  </div>
 </div>
 
-<!-- Clarity Section -->
+<!-- QR Section -->
 <div class="w3-padding-64 w3-light-grey">
   <div class="w3-row-padding ">
     <div class="w3-col s6 w3-center w3-padding-large">
@@ -61,10 +77,37 @@ img {margin-bottom: -8px;}
         <div class="w3-card-4 w3-dark-grey">
 
             <div class="w3-container w3-center w3-padding-large">
-                <h1 class="w3-xlarge">Take photos with our app</h1>
+
+                
+                <h1 class="w3-xxlarge">Generate Your QR Code</h1>
                 <hr class="w3-opacity">
-                <p>Super simple installment: free of charge</p>
-                <p><button class="w3-button w3-block w3-green w3-round" onclick="document.getElementById('download').style.display='block'">Download </button></p>
+                <form id="generate-form" class="w3-large">
+                    <input
+                    id="url"
+                    type="url"
+                    placeholder="Enter a URL"
+                    class="w3-input"
+                    required
+                    />
+                    
+                    <select class="w3-select w3-border w3-text-gray" name="option" id="size" style="margin-top: 20px;">
+                        <option value="" disabled selected>Choose your Size</option>
+                        <option value="100" >100x100</option>
+                        <option value="200" >200x200</option>
+                        <option value="300" >300x300</option>
+                        <option value="400" >400x400</option>
+                        <option value="500" >500x500</option>
+                        <option value="600" >600x600</option>
+                        <option value="700" >700x700</option>
+                    </select>
+                    
+                    
+                    <p><button class="w3-button w3-block w3-green w3-round" type="submit">Generate QR Code </button></p>
+                </form>
+                
+                <!-- <div id="generated">
+                    <div id="qrcode"></div>
+                </div> -->
             </div>
             
             </div>
@@ -72,12 +115,13 @@ img {margin-bottom: -8px;}
     </div>
     
     <div class="w3-col s6">
-      <h1 class="w3-xxxlarge"><b>Generate Your QR Code</b></h1>
+      
       <h1 class="w3-xxxlarge w3-text-red"><b>How To Generate</b></h1>
       
         <ol>
-            <li>Copy and paste the url of your choice below.</li>
-            <li>Hit submit.</li>
+            <li>Copy and paste the url of your choice.</li>
+            <li>Select your QR code final size.</li>
+            <li>Generate the code.</li>
             <li>Download your QR Code.</li>
         </ol>
     </div>

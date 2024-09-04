@@ -1,82 +1,74 @@
 // https://www.youtube.com/watch?v=qNiUlml9MDk
 
 const form = document.getElementById("generate-form");
-const qr = document.getElementById("qrcode");
+// const qr = document.getElementById("qrcode");
 
 // Button submit
 const onGenerateSubmit = (e) => {
   e.preventDefault();
-
-  clearUI();
+  console.log("Generator triggered");
 
   const url = document.getElementById("url").value;
   const size = document.getElementById("size").value;
 
-  // Validate url
+  console.log("URL:", url);
+  console.log("Size:", size);
+
+  // Validate URL
   if (url === "") {
     alert("Please enter a URL");
   } else {
-    // showSpinner();
-    // Show spinner for 1 sec
-    setTimeout(() => {
-      //   hideSpinner();
-      generateQRCode(url, size);
-
-      // Generate the save button after the qr code image src is ready
-      setTimeout(() => {
-        // Get save url
-        const saveUrl = qr.querySelector("img").src;
-        // Create save button
-        createSaveBtn(saveUrl);
-      }, 50);
-    }, 1000);
+    generateQRCode(url, size);
   }
 };
 
-// Generate QR code
-
+// Generate QR code and display it in the modal
 const generateQRCode = (url, size) => {
-  const qrcode = new QRCode("qrcode", {
+  console.log("Generating QR");
+
+  // Update URL and size in the modal
+  document.getElementById("display-url").textContent = url;
+  document.getElementById("display-size").textContent = `${size}x${size}`;
+
+  const qrCodeContainer = document.getElementById("qr-code-container");
+  qrCodeContainer.innerHTML = ""; // Clear previous QR code
+
+  // Create a new QR code in the container
+  new QRCode(qrCodeContainer, {
     text: url,
     width: size,
     height: size,
     colorDark: "#123368",
     colorLight: "#ffffff",
   });
+
+  // Convert the QR code canvas to an image after a short delay
+  setTimeout(() => {
+    const canvas = qrCodeContainer.querySelector("canvas");
+    if (canvas) {
+      const img = document.createElement("img");
+      img.src = canvas.toDataURL("image/png");
+      img.style.width = "50%";
+
+      qrCodeContainer.innerHTML = ""; // Clear canvas
+      qrCodeContainer.appendChild(img); // Add the image to the left side
+
+      createSaveBtn(img.src); // Create the download button
+      document.getElementById("qrModal").style.display = "block"; // Open the modal
+    } else {
+      console.error("QR code canvas not found.");
+    }
+  }, 100);
 };
-
-// Clear QR code and save button
-const clearUI = () => {
-  qr.innerHTML = "";
-  const saveBtn = document.getElementById("save-link");
-  if (saveBtn) {
-    saveBtn.remove();
-  }
-};
-
-// // Show spinner
-// const showSpinner = () => {
-//   const spinner = document.getElementById("spinner");
-//   spinner.style.display = "block";
-// };
-
-// // Hide spinner
-// const hideSpinner = () => {
-//   const spinner = document.getElementById("spinner");
-//   spinner.style.display = "none";
-// };
 
 // Create save button to download QR code as image
 const createSaveBtn = (saveUrl) => {
   const link = document.createElement("a");
-  link.id = "save-link";
-  link.classList = "";
   link.href = saveUrl;
-  link.download = "qrcode";
-  link.innerHTML = "Download YOur QR Code";
-  document.getElementById("generated").appendChild(link);
+  link.download = "qrcode.png"; // Specify the filename
+  link.innerHTML = "Download Your QR Code";
+  document.getElementById("qr-info").appendChild(link);
 };
 
-// hideSpinner();
+document.addEventListener("submit", onGenerateSubmit);
 
-form.addEventListener("submit", onGenerateSubmit);
