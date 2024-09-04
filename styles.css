@@ -1,0 +1,125 @@
+title {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    width:  100%;
+    font-size: 50px;
+    background-color: lightskyblue;
+}
+
+.container-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  align-items: center;
+    margin-top: 100px;
+}
+
+.container-main > div {
+    margin: 10px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+}
+
+.qrIntro{
+    width: 275px;
+    margin: 50px;
+}
+
+.generate-form{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.generate-form .url, .size, .button{
+   margin: 5px;
+   font-size: 30px;
+   font-weight: bold;
+   
+}
+/* 
+.genegenerate-form .button{
+    height: 50px;
+    font-size: 30px;
+   font-weight: bold;
+    
+} */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width:  100%;
+    text-align: center;
+    background-color: lightskyblue;
+}
+
+
+.generate-form button[type="submit"] {
+    background: #ef3f5a;
+    border: 1px solid #ef3f5a;
+    color: #fff;
+    padding: 0 30px;
+    cursor: pointer;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  
+  .genegenerate-form button:hover {
+    opacity: 0.5;
+    
+  }
+  
+  .generate-form {
+    display: -webkit-box;
+    display: flex;
+    z-index: 10;
+    position: relative;
+    width: 500px;
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .generate-form > * {
+    border: 0;
+    padding: 0 0 0 10px;
+    background: #fff;
+    line-height: 50px;
+    font-size: 1rem;
+    border-radius: 0;
+    outline: 0;
+    -webkit-appearance: none;
+  }
+  
+  input[type="url"] {
+    flex-basis: 100px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropdown:hover .size {
+    display: block;
+  }
+
+  .size {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
