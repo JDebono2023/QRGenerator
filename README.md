@@ -1,2 +1,4 @@
 # QRGenerator
-A simple vanilla QR code generator
+A simple QR code generator
+w3.css
+qrcode.js
