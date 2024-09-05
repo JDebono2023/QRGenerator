@@ -11,141 +11,156 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="qrcode.js"></script>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="scripts/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/qrcode.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
 <style>
-    html {
-    height: 100%;
-}
-body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
-body {
-    min-height: 100%;
-    max-width:1500px;
+html, body {
+    width: 100%;
+  height: 80%;
     background-color: black; 
     margin: 0 auto;
     font-size: 16px;
 }
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
 
+:root{
+    --lt-grey: #DBE3E7;
+    --blue-grey: #B6C6D6;
+    --med-grey: #9AA2AE;
+    --grey: #73787E;
+    --dk-grey: #3C3D3E;
+    --lt-blue: #82B7DA;
+}
+
+.container {
+  height: 100%; /* Full viewport height */
+  background-color: yellow;
+}
 
 
 </style>
 </head>
 <body >
-
+<div class="container">
 <!-- Header with Slideshow -->
-<header class="w3-container w3-padding-32 w3-teal w3-center w3-xlarge">
+<header class="w3-container w3-padding-32 w3-center w3-xlarge" style="background-color: #73787E;">
   
-  <div class="w3-xxxlarge">
-    2024 Free QR Code Generator
+    <div class="w3-xxxlarge" style="color: #DBE3E7;">
+      2024 Free QR Code Generator
+    </div>
+    
+  </header>
+  
+  <!-- Modal Structure -->
+  <div id="qrModal" class="w3-modal" style="display:none; ">
+      <div class="w3-modal-content w3-animate-top w3-card-4" >
+          <header class="w3-container " style="background-color: #73787E; color: #DBE3E7;">
+              <span onclick="closeModal()"
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Your QR Code</h2>
+          </header>
+  
+          <div class="w3-row w3-padding-16" id="modal-content">
+              <div class="w3-col s6 w3-center">
+                  <div id="qr-code-container" class="w3-image" >
+                  <!-- QR Code injected here -->
+                  </div>
+              </div>
+              <div class="w3-col s6 ">
+                  <div id="qr-info" style="color: #73787E;">
+                      <p><strong>URL:</strong> <span id="display-url"></span></p>
+                      <p><strong>Size:</strong> <span id="display-size"></span></p>
+                      <p></p>
+                      <!-- Download button will be injected here -->
+                  </div>
+              </div>
+          </div>
+      
+          <footer class="w3-container " style="background-color: #73787E; color: #DBE3E7;">
+              <p>2024 Free QR Code Generator</p>
+          </footer>
+      </div>
   </div>
   
-</header>
-
-<!-- Modal Structure -->
-<div id="qrModal" class="w3-modal" style="display:none; ">
-    <div class="w3-modal-content w3-animate-top w3-card-4" >
-        <header class="w3-container w3-teal">
-            <span onclick="document.getElementById('qrModal').style.display='none'"
-            class="w3-button w3-display-topright">&times;</span>
-            <h2>Your QR Code</h2>
-        </header>
-        <div class="w3-container w3-padding-16" id="modal-content" style="display: flex; align-items: center; justify-content: space-between;">
-            <!-- Left Side: QR Code Image -->
-            <div id="qr-code-container" class="w3-image w3-center" >
-            <!-- QR Code injected here -->
-            </div>
-
-            <!-- Right Side: URL, Size Info, and Download Button -->
-            <div id="qr-info" style="flex: 1; padding-left: 20px;">
-                <p><strong>URL:</strong> <span id="display-url"></span></p>
-                <p><strong>Size:</strong> <span id="display-size"></span></p>
-                <!-- Download button will be injected here -->
-            </div>
-        </div>
-        <footer class="w3-container w3-teal">
-            <p>2024 Free QR Code Generator</p>
-        </footer>
-    </div>
-</div>
-
-<!-- QR Section -->
-<div class="w3-padding-64 w3-light-grey">
-  <div class="w3-row-padding ">
-    <div class="w3-col s6 w3-center w3-padding-large">
-
-        <div class="w3-card-4 w3-dark-grey">
-
-            <div class="w3-container w3-center w3-padding-large">
-
-                
-                <h1 class="w3-xxlarge">Generate Your QR Code</h1>
-                <hr class="w3-opacity">
-                <form id="generate-form" class="w3-large">
-                    <input
-                    id="url"
-                    type="url"
-                    placeholder="Enter a URL"
-                    class="w3-input"
-                    required
-                    />
-                    
-                    <select class="w3-select w3-border w3-text-gray" name="option" id="size" style="margin-top: 20px;">
-                        <option value="" disabled selected>Choose your Size</option>
-                        <option value="100" >100x100</option>
-                        <option value="200" >200x200</option>
-                        <option value="300" >300x300</option>
-                        <option value="400" >400x400</option>
-                        <option value="500" >500x500</option>
-                        <option value="600" >600x600</option>
-                        <option value="700" >700x700</option>
-                    </select>
-                    
-                    
-                    <p><button class="w3-button w3-block w3-green w3-round" type="submit">Generate QR Code </button></p>
-                </form>
-                
-                <!-- <div id="generated">
-                    <div id="qrcode"></div>
-                </div> -->
-            </div>
-            
-            </div>
+  <!-- QR Section -->
+  <div class="w3-container container w3-padding-64" style="background-color: #DBE3E7;">
+    <div class="w3-row-padding ">
+      <div class="w3-col s6 w3-center w3-padding-large">
+  
+          <div class="w3-card-4 " style="background-color: #73787E;">
+  
+              <div class="w3-container w3-center w3-padding-large">
+  
+                  
+                  <h1 class="w3-xxlarge" style="color: #DBE3E7;">Generate Your QR Code</h1>
+                  <hr class="w3-opacity">
+                  <form id="generate-form" class="w3-large">
+                      <input
+                      id="url"
+                      type="url"
+                      placeholder="Enter a URL"
+                      class="w3-input"
+                      required
+                      />
+                      
+                      <select class="w3-select w3-border w3-text-gray" name="option" id="size" style="margin-top: 20px;">
+                          <option value="" disabled selected>Choose your Size</option>
+                          <option value="100" >100x100</option>
+                          <option value="200" >200x200</option>
+                          <option value="300" >300x300</option>
+                          <option value="400" >400x400</option>
+                          <option value="500" >500x500</option>
+                          <option value="600" >600x600</option>
+                          <option value="700" >700x700</option>
+                      </select>
+                      
+                      
+                      <p><button class="w3-button w3-block w3-round" type="submit" style="background-color: #82B7DA; color: #3C3D3E; font-weight: bold;">GENERATE</button></p>
+                  </form>
+                  
+                  <!-- <div id="generated">
+                      <div id="qrcode"></div>
+                  </div> -->
+              </div>
+              
+              </div>
+        
+      </div>
       
-    </div>
-    
-    <div class="w3-col s6">
-      
-      <h1 class="w3-xxxlarge w3-text-red"><b>How To Generate</b></h1>
-      
-        <ol>
-            <li>Copy and paste the url of your choice.</li>
-            <li>Select your QR code final size.</li>
-            <li>Generate the code.</li>
-            <li>Download your QR Code.</li>
-        </ol>
+      <div class="w3-col s6">
+        
+        <h1 class="w3-xxxlarge w3-text-red"><b>How To Generate</b></h1>
+        
+          <ol>
+              <li>Copy and paste the url of your choice.</li>
+              <li>Select your QR code final size.</li>
+              <li>Generate the code.</li>
+              <li>Download your QR Code.</li>
+          </ol>
+      </div>
     </div>
   </div>
+  
+  <!-- Footer -->
+  <footer class="w3-container w3-center " style="background-color: #73787E; padding: 10px; color: #DBE3E7;">
+    
+      <ul class="w3-ul w3-small">
+          <li class="">Contact The Developer</li>
+          <p class="" spellcheck="false">Jennifer Debono </br>jennifer.debono79@gmail.com </p>
+      
+      </ul>
+              
+      <a href="mailto:jennifer.debono79@gmail.com"><i class="material-icons w3-hover-opacity w3-xlarge">email</i></a>
+      <a href="https://github.com/JDebono2023"><i class="fa fa-github w3-hover-opacity w3-xlarge"></i></a>
+      <a href="https://www.linkedin.com/in/jenniferdebono/"><i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i></a>
+      
+      <p class="w3-small">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+    
+    
+  </footer>
 </div>
 
-
-<!-- Footer -->
-<footer class="w3-container  w3-teal w3-center " style="padding: 10px;">
-  
-    <ul class="w3-ul w3-small">
-        <li class="">Contact The Developer</li>
-        <p class="" spellcheck="false">Jennifer Debono </br>jennifer.debono79@gmail.com </p>
-    
-    </ul>
-            
-    <a href="mailto:jennifer.debono79@gmail.com"><i class="material-icons w3-hover-opacity w3-xlarge">email</i></a>
-    <a href="https://github.com/JDebono2023"><i class="fa fa-github w3-hover-opacity w3-xlarge"></i></a>
-    <a href="https://www.linkedin.com/in/jenniferdebono/"><i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i></a>
-    
-    <p class="w3-small">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-  
-  
-</footer>
 
 </body>
 </html>
